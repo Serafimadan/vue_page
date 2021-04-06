@@ -36,18 +36,30 @@ export default {
     }
   },
   mounted: function() {
-    // let findData = this.items.map(item => item.characters);
-    let findSpecies = this.items.map(item => item.characters.map(type => type.species));
-    let findEpisodes = this.items.map(item => item.characters.map(type => type.episode));
+    let findData = this.items.map(item => item.characters);
+//    let findSpecies = this.items.map(item => item.characters.map(type => type.species));
+//    let findEpisodes = this.items.map(item => item.characters.map(type => type.episode));
   
-        for (let elem of findSpecies) {
-          console.log(elem);
-	    }
-        for (let elem of findEpisodes) {
-          console.log(elem);
-	    
+//        for (let elem of findSpecies) {
+//          console.log(elem);
+//	    }
+//       for (let elem of findEpisodes) {
+//          console.log(elem);    
+//    }
+    let stat = new Map();
+
+    for (let episode of findData) {
+      for (let character of episode) {
+        if (stat.has(character.species)) {
+          stat.set(character.species, stat.get(character.species) + character.episode.length);
+        }
+        else {
+          stat.set(character.species, character.episode.length);
+        }
+      }
     }
 
+    console.log(stat);
   },
   computed: {
     typesCharacter: function() {
