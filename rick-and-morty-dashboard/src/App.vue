@@ -19,7 +19,6 @@
 
 <script>
 import configJson from "../public/data/episodes.json";
-// import axios from 'axios';
 import NavBar from "./components/NavBar.vue";
 import PieChart from "./components/PieChart.vue";
 import Profile from "./components/Profile.vue";
