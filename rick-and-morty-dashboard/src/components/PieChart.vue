@@ -1,7 +1,9 @@
 <template>  
-  <div> 
-    <h1>Statistics</h1>
-    <h2>By species</h2>
+  <div class="container"> 
+    <div> 
+      <h1>Statistics</h1>
+      <span>By species</span>
+    </div>
     <apexchart :width="558" :options="chartOptions" :series="series"></apexchart>
   </div>
 </template>
@@ -22,7 +24,7 @@ export default {
       const labels = this.data.map(item => item.label);
       return {
         chart: {
-          width: 558,
+          width: 458,
           type: "pie"
         },
         labels,
@@ -35,7 +37,7 @@ export default {
           left: 0,
           top: 0,
           opacity: 0
-  }
+        }
         },
         theme: {
           theme: "dark",
@@ -43,7 +45,8 @@ export default {
             enabled: true,
             color: "#e78b09",
             shadeTo: "light"
-          }
+          },
+          
         }
       };
     }
@@ -54,7 +57,12 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.container {
+  flex: 65%;
+  padding: 2rem;
+  background-color: #ffffff;
+} 
 .apexcharts-tooltip {
   background: #000;
   color: #eee;
@@ -63,4 +71,11 @@ export default {
 .apexcharts-tooltip-series-group {
   padding-bottom: 0 !important;
 }
+h1 {
+  margin-bottom: auto;
+} 
+span {
+  font-weight: 800;
+  color: #6f7884;
+} 
 </style>
