@@ -1,82 +1,23 @@
 <template>
   <div id="app"> 
-    {{}}
       <NavBar msgname1="Rick" msgname2="& Morty"/>
-      <PieChart
-      :data="[
-        { label: typesCharacter[0], value: 29 },
-        { label: typesCharacter[1], value: 14 },
-        { label: typesCharacter[2], value: 10 },
-        { label: typesCharacter[3], value: 6 },
-        { label: typesCharacter[4], value: 5 },
-        { label: typesCharacter[5], value: 4 },
-        { label: typesCharacter[6], value: 2 },
-      ]"
-    />
+      <PieChart/>
       <Profile msg1="Justin Roiland" msg2="Co-creator"/>
   </div>
 </template>
 
 <script>
-import configJson from "../public/data/episodes.json";
-import NavBar from "./components/NavBar.vue";
-import PieChart from "./components/PieChart.vue";
-import Profile from "./components/Profile.vue";
-
-export default {
-  name: "App",
-  components: {
-    NavBar,
-    PieChart,
-    Profile
-  },
-  data(){
-    return {
-      items: configJson
-    }
-  },
-  mounted: function() {
-    let findData = this.items.map(item => item.characters);
-//    let findSpecies = this.items.map(item => item.characters.map(type => type.species));
-//    let findEpisodes = this.items.map(item => item.characters.map(type => type.episode));
-  
-//        for (let elem of findSpecies) {
-//          console.log(elem);
-//	    }
-//       for (let elem of findEpisodes) {
-//          console.log(elem);    
-//    }
-    let stat = new Map();
-
-    for (let episode of findData) {
-      for (let character of episode) {
-        if (stat.has(character.species)) {
-          stat.set(character.species, stat.get(character.species) + character.episode.length);
-        }
-        else {
-          stat.set(character.species, character.episode.length);
-        }
-      }
-    }
-
-    console.log(stat);
-  },
-  computed: {
-    typesCharacter: function() {
-      let findData = this.items.map(item => item.characters.map(type => type.species));
-      let result = [].concat(...findData);
-      let filteredArray = result.filter(function(item, pos){
-        return result.indexOf(item)== pos; 
-      });
-      return filteredArray;
+  import NavBar from "./components/NavBar.vue";
+  import PieChart from "./components/PieChart.vue";
+  import Profile from "./components/Profile.vue";
+  export default {
+    name: "App",
+    components: {
+      NavBar,
+      PieChart,
+      Profile
     },
-    uniqAmount: function() {  
-        
-      return this.items.map(item => item.characters.map(type => type.episode));     
-    },
-    
-  },
-}  
+  }  
 </script>
 
 <style>
@@ -108,5 +49,4 @@ body {
     grid-template-columns: none;
   }
 } */
-
 </style>

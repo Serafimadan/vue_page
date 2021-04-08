@@ -63,7 +63,7 @@
         flex-direction: column;
         text-align: center;
         padding: 0;
-        margin-top: 8em;
+        margin-top: 5em;
     }
     li {
         display: inline-block;
@@ -74,7 +74,7 @@
         color: #42b983;
     }
     img {
-        width: 25px;
+        width: 23px;
         height: 30px;
         filter: invert(1);
     } 
@@ -86,5 +86,32 @@
         text-align: center;
         text-decoration: underline; 
         margin-bottom: 2em;
-    }    
+    }   
+    /* ul li a {
+        position:relative;
+        z-index: 1;
+    }
+    ul li a:after {
+        display: block;
+        position: absolute;
+        top: 0px;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        margin: auto;
+        padding: 2.4em;
+        width: 100%;
+        height: 15px;
+        content: '.';
+        color: transparent;
+        background: #6466f1;
+        visibility: none;
+        opacity: 0;
+        z-index: -1;
+    }
+    ul li a:hover:after {
+        opacity: 1;
+        visibility: visible;
+        height: 100%;
+    } */
 </style>

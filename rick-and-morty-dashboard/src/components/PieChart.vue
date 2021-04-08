@@ -4,78 +4,146 @@
       <h1>Statistics</h1>
       <span>By species</span>
     </div>
-    <apexchart :width="558" :options="chartOptions" :series="series"></apexchart>
+    <apexchart type="pie" :width="558" :options="chartOptions" :series="series"></apexchart>
   </div>
 </template>
 
 <script>
-import VueApexCharts from "vue-apexcharts";
+  import configJson from "../../public/data/episodes.json";
+  import VueApexCharts from "vue-apexcharts";
 
-export default {
-  name: "PieGraph",
-  props: {
-    data: Array
-  },
-  computed: {
-    series() {
-      return this.data.map(item => item.value);
+  export default {
+    name: "PieGraph",
+    components: {
+      apexchart: VueApexCharts
     },
-    chartOptions() {
-      const labels = this.data.map(item => item.label);
+    data() {
       return {
-        chart: {
-          width: 458,
-          type: "pie"
-        },
-        labels,
-        dataLabels: {
-          textAnchor: "middle",
-          formatter: (_, opt) => this.series[opt.seriesIndex],
-          enabled: true,
-          dropShadow: {
-          enabled: true,
-          left: 0,
-          top: 0,
-          opacity: 0
-        }
-        },
-        theme: {
-          theme: "dark",
-          monochrome: {
-            enabled: true,
-            color: "#e78b09",
-            shadeTo: "light"
+        items: configJson,
+        series: [],
+        chartOptions: {
+          chart: {
+            width: 458,
+            type: "pie"
           },
-          
-        }
+          dataLabels: {
+            textAnchor: "middle",
+            formatter: (_, opt) => this.series[opt.seriesIndex],
+            enabled: true,
+            dropShadow: {
+            enabled: true,
+            left: 0,
+            top: 0,
+            opacity: 0
+          }
+          },
+          theme: {
+            theme: "dark",
+            monochrome: {
+              enabled: true,
+              color: "#e78b09",
+              shadeTo: "light"
+            },
+          },
+          labels: [],
+          responsive: [{
+            breakpoint: 480,
+            options: {
+              chart: {
+                width: 200
+              },
+              legend: {
+                position: 'bottom'
+              }, 
+            }
+          }]
+        },
       };
+    },
+    created: function () { 
+    let allEpisodesWithCharacters = this.items.map(item => item.characters);
+
+    let epSpecies = new Map(); // species in all episodes
+    let statPerc = new Map();
+    let epSpeciesArr; // species in an episode
+    let episodeNum = 0;
+
+    // calculate number of each specie per episode
+    for (let episode of allEpisodesWithCharacters) {
+      episodeNum++;
+
+      // save overall number of characters in the episode
+      statPerc.set(episodeNum, episode.length); 
+
+      // calculate number of each specie in the episode
+      epSpeciesArr = new Map();
+      for (let character of episode) {
+        // summarize characters divided by a specie
+        if (epSpeciesArr.has(character.species)) {
+          epSpeciesArr.set(character.species, epSpeciesArr.get(character.species) + 1);
+        }
+        else {
+          epSpeciesArr.set(character.species, 1);
+        }
+      }
+      // save statistics for the episode
+      epSpecies.set(episodeNum, epSpeciesArr);
     }
-  },
-  components: {
-    apexchart: VueApexCharts
+
+    let stat = new Map();
+    let total = 0;
+    let value;
+
+    // calculate overal statistics 
+    for (let [epNum, epStat] of epSpecies.entries()) {
+      // species ratio in each episode
+      for (let [specie, charsNum] of epStat.entries()) {
+        value = charsNum / statPerc.get(epNum);
+
+        if (stat.has(specie)) {
+          stat.set(specie, stat.get(specie) + value);
+        }
+        else {
+          stat.set(specie, value);
+        }
+
+        // total ratio for all species
+        total += value;
+      }
+    }
+
+    // sort array by value
+    let statSorted = new Map([...stat.entries()].sort((a, b) => b[1] - a[1]));
+
+    // fill series with data in percents
+    for (let [key, value] of statSorted.entries()) {
+      this.chartOptions.labels.push(key);
+      this.series.push(Math.round(value / total * 100));
+    }
   }
-};
+  }
 </script>
 
 <style scoped>
-.container {
-  flex: 65%;
-  padding: 2rem;
-  background-color: #ffffff;
-} 
-.apexcharts-tooltip {
-  background: #000;
-  color: #eee;
-  border: none !important;
-}
-.apexcharts-tooltip-series-group {
-  padding-bottom: 0 !important;
-}
-h1 {
-  margin-bottom: auto;
-} 
-span {
-  font-weight: 800;
-  color: #6f7884;
-} 
+  .container {
+    flex: 65%;
+    padding: 2rem;
+    background-color: #ffffff;
+  } 
+  .apexcharts-tooltip {
+    background: #000;
+    color: #eee;
+    border: none !important;
+  }
+  .apexcharts-tooltip-series-group {
+    padding-bottom: 0 !important;
+  }
+  h1 {
+    margin-bottom: auto;
+  } 
+  span {
+    font-weight: 500;
+    color: #6f7884;
+    font-size: 22px;
+  } 
 </style>
