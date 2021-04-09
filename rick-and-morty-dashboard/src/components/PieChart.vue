@@ -129,6 +129,7 @@
     flex: 65%;
     padding: 2rem;
     background-color: #ffffff;
+    z-index: 2;
   } 
   .apexcharts-tooltip {
     background: #000;

@@ -49,6 +49,7 @@
     }   
     .content {
         flex: 1 0 auto;
+        position: relative;
     }   
     h3 {
         margin: 0;
@@ -87,19 +88,19 @@
         text-decoration: underline; 
         margin-bottom: 2em;
     }   
-    /* ul li a {
+    ul li a {
         position:relative;
         z-index: 1;
     }
     ul li a:after {
         display: block;
         position: absolute;
-        top: 0px;
-        left: 0;
+        top: -20px;
+        left: -20px;
         bottom: 0;
         right: 0;
         margin: auto;
-        padding: 2.4em;
+        padding: 2em 2em 0em 5em;
         width: 100%;
         height: 15px;
         content: '.';
@@ -108,10 +109,25 @@
         visibility: none;
         opacity: 0;
         z-index: -1;
+        border-radius: 5px 0 0 5px;
     }
+    ul li a::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    opacity: 0.3;
+    transform: scale3d(0,1,1);
+    transform-origin: 0% 50%;
+    transition: transform 0.5s;
+    transition-timing-function: cubic-bezier(0.2,1,0.3,1);
+    }    
     ul li a:hover:after {
         opacity: 1;
         visibility: visible;
         height: 100%;
-    } */
+    }
 </style>
