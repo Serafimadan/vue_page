@@ -2,13 +2,11 @@
 
 ## Introduction
 
-Welcome to the Metabolic front-end developer internship assessment. It should take you between 3 and 7 hours depending on your experience. The primary goal of this exercise is to assess your ability to write well defined HTML, CSS and JavaScript using the latest patterns and technologies. There are no hard rules or tricky questions.
+ The primary goal of this exercise is to assess your ability to write well defined HTML, CSS and JavaScript using the latest patterns and technologies. There are no hard rules or tricky questions.
 
 **We hope you have fun.**
 
 ## Brief
-
-We have prepared a skeleton app for you, but please change whatever you want. It's what you normally get with the [Vue CLI](https://cli.vuejs.org), but with some assets you'll need for the assignment.
 
 ![Dashboard](design/dashboard.png)
 
